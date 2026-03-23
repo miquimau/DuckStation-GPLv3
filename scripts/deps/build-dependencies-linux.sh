@@ -19,7 +19,7 @@ LIBJPEG=9f
 LIBPNG=1.6.43
 LIBWEBP=1.4.0
 SDL2=2.30.6
-QT=6.7.2
+QT=6.8.3
 ZSTD=1.5.6
 
 CPUINFO=7524ad504fdcfcf75a18a133da6abd75c5d48053
@@ -38,12 +38,12 @@ fd6f417fe9e3a071cf1424a5152d926a34c4a3c5070745470be6cf12a404ed79  $LIBBACKTRACE.
 61f873ec69e3be1b99535634340d5bde750b2e4447caa1db9f61be3fd49ab1e5  libwebp-$LIBWEBP.tar.gz
 c6ef64ca18a19d13df6eb22df9aff19fb0db65610a74cc81dae33a82235cacd4  SDL2-$SDL2.tar.gz
 8c29e06cf42aacc1eafc4077ae2ec6c6fcb96a626157e0593d5e82a34fd403c1  zstd-$ZSTD.tar.gz
-c5f22a5e10fb162895ded7de0963328e7307611c688487b5d152c9ee64767599  qtbase-everywhere-src-$QT.tar.xz
-e1a1d8785fae67d16ad0a443b01d5f32663a6b68d275f1806ebab257485ce5d6  qtimageformats-everywhere-src-$QT.tar.xz
-fb0d1286a35be3583fee34aeb5843c94719e07193bdf1d4d8b0dc14009caef01  qtsvg-everywhere-src-$QT.tar.xz
-58e855ad1b2533094726c8a425766b63a04a0eede2ed85086860e54593aa4b2a  qttools-everywhere-src-$QT.tar.xz
-9845780b5dc1b7279d57836db51aeaf2e4a1160c42be09750616f39157582ca9  qttranslations-everywhere-src-$QT.tar.xz
-a2a057e1dd644bd44abb9990fecc194b2e25c2e0f39e81aa9fee4c1e5e2a8a5b  qtwayland-everywhere-src-$QT.tar.xz
+56001b905601bb9023d399f3ba780d7fa940f3e4861e496a7c490331f49e0b80  qtbase-everywhere-src-$QT.tar.xz
+049bfb99845e4801672aca07c3c4fc4c140f932a3a33faa899419579e33ef1c8  qtimageformats-everywhere-src-$QT.tar.xz
+35eb516460f00f264eb504baa253432384351cf23fb9980a5857190e8deef438  qtsvg-everywhere-src-$QT.tar.xz
+02a4e219248b94f1333df843d25763f35251c1074cdc4fb5bda67d340f8c8b3a  qttools-everywhere-src-$QT.tar.xz
+c3c61d79c3d8fe316a20b3617c64673ce5b5519b2e45535f49bee313152fa531  qttranslations-everywhere-src-$QT.tar.xz
+20fe385887d21190165a3180c17dcfc8b9a0e1da4ec76865b6334bdc709994b0  qtwayland-everywhere-src-$QT.tar.xz
 e1351218d270db49c3dddcba04fb2153b09731ea3fa6830e423f5952f44585be  cpuinfo-$CPUINFO.tar.gz
 3eea5ccce6670c126282f1ba4d32c19d486db49a1a5cbfb8d6f48774784d310c  discord-rpc-$DISCORD_RPC.tar.gz
 5a7f86eba3c6301bb573def825977c31aa3d5fc5500f213c123498707fdbd378  shaderc-$SHADERC.tar.gz
@@ -128,7 +128,7 @@ echo "Building SDL2..."
 rm -fr "SDL2-$SDL2"
 tar xf "SDL2-$SDL2.tar.gz"
 cd "SDL2-$SDL2"
-cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$INSTALLDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLDIR" -DBUILD_SHARED_LIBS=ON -DSDL_SHARED=ON -DSDL_STATIC=OFF -G Ninja
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$INSTALLDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLDIR" -DBUILD_SHARED_LIBS=ON -DSDL_SHARED=ON -DSDL_STATIC=OFF -DSDL_PIPEWIRE=OFF -G Ninja
 cmake --build build --parallel
 ninja -C build install
 cd ..
@@ -233,7 +233,7 @@ echo "Building shaderc..."
 rm -fr "shaderc-$SHADERC"
 tar xf "shaderc-$SHADERC.tar.gz"
 cd "shaderc-$SHADERC"
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$INSTALLDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLDIR" -DSHADERC_SKIP_TESTS=ON -DSHADERC_SKIP_EXAMPLES=ON -DSHADERC_SKIP_COPYRIGHT_CHECK=ON -B build -G Ninja
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$INSTALLDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLDIR" -DSHADERC_SKIP_TESTS=ON -DSHADERC_SKIP_EXAMPLES=ON -DSHADERC_SKIP_COPYRIGHT_CHECK=ON -DCMAKE_CXX_FLAGS="-include cstdint" -B build -G Ninja
 cmake --build build --parallel
 ninja -C build install
 cd ..
@@ -259,7 +259,7 @@ echo "Building discord-rpc..."
 rm -fr "discord-rpc-$DISCORD_RPC"
 tar xf "discord-rpc-$DISCORD_RPC.tar.gz"
 cd "discord-rpc-$DISCORD_RPC"
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$INSTALLDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLDIR" -DBUILD_SHARED_LIBS=ON -B build -G Ninja
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$INSTALLDIR" -DCMAKE_INSTALL_PREFIX="$INSTALLDIR" -DBUILD_SHARED_LIBS=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -B build -G Ninja
 cmake --build build --parallel
 ninja -C build install
 cd ..
