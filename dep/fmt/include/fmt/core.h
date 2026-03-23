@@ -299,7 +299,7 @@ namespace detail {
 // Suppresses "unused variable" warnings with the method described in
 // https://herbsutter.com/2009/10/18/mailbag-shutting-up-compiler-warnings/.
 // (void)var does not work on many Intel compilers.
-template <typename... T> FMT_CONSTEXPR void ignore_unused(const T&...) {}
+template <typename... T> constexpr void ignore_unused(const T&...) {}
 
 constexpr FMT_INLINE auto is_constant_evaluated(
     bool default_value = false) noexcept -> bool {
@@ -371,7 +371,7 @@ template <typename T> auto convert_for_visit(T) -> monostate { return {}; }
 
 // Casts a nonnegative integer to unsigned.
 template <typename Int>
-FMT_CONSTEXPR auto to_unsigned(Int value) ->
+constexpr auto to_unsigned(Int value) ->
     typename std::make_unsigned<Int>::type {
   FMT_ASSERT(std::is_unsigned<Int>::value || value >= 0, "negative value");
   return static_cast<typename std::make_unsigned<Int>::type>(value);
@@ -2726,7 +2726,7 @@ template <typename Char, typename... Args> class basic_format_string {
   template <typename S,
             FMT_ENABLE_IF(
                 std::is_convertible<const S&, basic_string_view<Char>>::value)>
-  FMT_CONSTEVAL FMT_INLINE basic_format_string(const S& s) : str_(s) {
+  FMT_CONSTEXPR FMT_INLINE basic_format_string(const S& s) : str_(s) {
     static_assert(
         detail::count<
             (std::is_base_of<detail::view, remove_reference_t<Args>>::value &&
